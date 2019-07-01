@@ -20,8 +20,8 @@ const TodoForm = ({ description, priority, handleDescriptionChange, handlePriori
                 <option value="Low">Low</option>
             </select>
             <button
-            className={'button button1'}
-                onClick={(description !== '' && priority !== '') && (() => handleAddTodo(description, priority))}>
+                className={'button button1'}
+                onClick={(description !== '' && priority !== '') ? (() => handleAddTodo(description, priority)) : (() => { })}>
                 Add Todo
             </button>
             <br />

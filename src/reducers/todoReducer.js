@@ -1,10 +1,12 @@
+import { ADD_TODO, REMOVE_TODO, CHECK_TODO } from "../actionTypes/TodoActionTypes";
+
 const initialState = {
     todos: []
 }
 
 const TodoReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD':
+        case ADD_TODO:
             return {
                 ...state,
                 todos: state.todos.concat({
@@ -14,13 +16,13 @@ const TodoReducer = (state = initialState, action) => {
                     completed: false
                 })
             }
-        case 'REMOVE':
+        case REMOVE_TODO:
             return {
                 ...state,
                 todos: state.todos.filter(todo => (todo.id !== action.todoId))
             }
 
-        case 'CHECK':
+        case CHECK_TODO:
             return {
                 ...state,
                 todos: state.todos.map(todo => {
