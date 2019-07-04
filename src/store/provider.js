@@ -1,11 +1,12 @@
 import React from 'react';
 import App from '../App';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import TodoReducer from '../reducers/todoReducer';
+import thunk from 'redux-thunk';
 
 const store = createStore(
-    TodoReducer
+    TodoReducer, applyMiddleware(thunk)
 );
 
 function StoreProvider() {

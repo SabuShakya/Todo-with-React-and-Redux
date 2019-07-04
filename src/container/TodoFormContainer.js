@@ -20,7 +20,7 @@ class TodoFormContainer extends PureComponent {
     }
 
     handleAddTodo = (description, priority) => {
-        this.props.addTodo(description, priority);
+        this.props.saveTodo(description, priority);
         this.resetLocalState();
     }
 

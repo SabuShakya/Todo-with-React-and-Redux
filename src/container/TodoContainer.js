@@ -2,19 +2,26 @@ import React, { PureComponent } from 'react';
 import TodoFormContainer from './TodoFormContainer';
 import TodoListContainer from './TodoListContainer';
 import { connect } from 'react-redux';
-import { addTodo, removeTodo, checkTodo } from '../actions/todoActions';
+import { removeTodo, checkTodo } from '../actions/todoActions';
+import { persistTodo, fetchTodo } from '../middleware/todoThunkActions';
 
 class TodoContainer extends PureComponent {
 
+    componentDidMount() {
+        this.props.fetchTodo();
+
+    }
     render() {
         return (
             <div>
                 <TodoFormContainer
-                    addTodo={this.props.addTodo} />
+                    saveTodo={this.props.saveTodo} />
                 <TodoListContainer
                     todoList={this.props.todos}
                     removeTodo={this.props.removeTodo}
-                    checkTodo={this.props.checkTodo} />
+                    checkTodo={this.props.checkTodo}
+                    errorMessage={this.props.errorMessage}
+                    dataLoaded={this.props.dataLoaded} />
             </div>
         );
     }
@@ -22,14 +29,17 @@ class TodoContainer extends PureComponent {
 
 const mapStateToProps = state => {
     return {
-        todos: state.todos
+        todos: state.todos,
+        dataLoaded: state.dataLoaded,
+        errorMessage: state.errorMessage
     }
 }
 
 const mapDispatchToProps = {
-    addTodo: (desc, prio) => addTodo(desc, prio),
+    saveTodo: (desc, prio) => persistTodo(desc, prio),
     removeTodo: (id) => removeTodo(id),
-    checkTodo: (id) => checkTodo(id)
+    checkTodo: (id) => checkTodo(id),
+    fetchTodo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoContainer);

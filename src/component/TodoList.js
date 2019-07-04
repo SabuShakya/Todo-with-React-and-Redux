@@ -1,9 +1,12 @@
 import React from 'react';
+import PacManLoader from './PacManLoader';
+import TodoListItem from './TodoListItem';
 
-const TodoList = (props) => {
-    return (
+const TodoList = ({ todoList, checkTodo, handleDelete, handleEditAction, dataLoaded, todoToEdit }) => {
+
+    const todoListBlock = (
         <div align="center">
-            {props.todoList.length > 0 &&
+            {todoList.length > 0 &&
                 <table>
                     <thead>
                         <tr>
@@ -11,28 +14,24 @@ const TodoList = (props) => {
                             <th>Todo Description</th>
                             <th>Priority</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {props.todoList.map(todo => (
-                            <tr key={todo.id}>
-                                <td>
-                                    <input
-                                        type="checkbox"
-                                        name={todo.description}
-                                        value={todo.completed}
-                                        onChange={() => props.checkTodo(todo.id)}
-                                    />
-                                </td>
-                                <td>{todo.description}</td>
-                                <td>{todo.priority}</td>
-                                <td>{todo.completed ? 'Completed' : 'Pending'}</td>
-                                <td><button onClick={() => props.handleDelete(todo.id)}>Delete</button></td>
-                            </tr>
-                        ))}
+                        <TodoListItem
+                            todoList={todoList}
+                            handleDelete={handleDelete}
+                            handleEditAction={handleEditAction}
+                            checkTodo={checkTodo}
+                            todoToEdit={todoToEdit}
+                        />
                     </tbody>
                 </table>}
+        </div>);
+
+    return (
+        <div align="center">
+            {dataLoaded ? todoListBlock : <PacManLoader />}
         </div>
     );
 }
